@@ -10,9 +10,14 @@
   "license": "ISC",
   "keywords": [],
   "dependencies": {
+    "cookie-session": "^2.0.0",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
+    "express-session": "^1.17.3",
     "googleapis": "^120.0.0",
-    "mongoose": "^7.3.1"
+    "mongoose": "^7.3.1",
+    "nodemon": "^2.0.22",
+    "passport": "^0.5.3",
+    "passport-google-oauth20": "^2.0.0"
   }
 }
