@@ -12,4 +12,4 @@ class CustomError extends Error {
       ]
     }
   }
-  module.exports = {CustomError};
+exports.CustomError = CustomError;

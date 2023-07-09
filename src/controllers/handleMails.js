@@ -1,34 +1,62 @@
-const createReply = (senderAddress, reciepentAddress,msgId,sub) => {
+const createReply = ({senderAddress,reciepentAddress,subject,msgId}) => {
   let emailLines = [];
-  emailLines.push("Content-Type: text/plain;")
-  emailLines.push(`subject: ${sub}`);
-  emailLines.push(`from: ${senderAddress}`);
-  emailLines.push(`to: ${reciepentAddress}`);
-  emailLines.push(`In-Reply-To: ${msgId}`)
+  emailLines.push("Content-Type: text/plain; charset='utf-8'")
+  emailLines.push(`subject: ${subject.value}`);
+  emailLines.push(`from: ${senderAddress.value}`);
+  emailLines.push(`to: ${reciepentAddress.value}`);
+  emailLines.push(`In-Reply-To: ${msgId.value}`);
+  emailLines.push('');
   emailLines.push('This is a auto-generated reply trial application');
   const email = emailLines.join('\r\n').trim();
   let base64Reply = Buffer.from(email).toString('base64');
   return base64Reply;
 };
-const getUnreadMails = async (gmail) => {
-  const emails = await gmail.users.messages.list({
+const getAllThreads = async (gmail) => {
+  const threads = await gmail.users.threads.list({
     userId: 'me',
-    q: 'is:unread category:primary after:2023/07/06',
-    maxResults: 6,
+    q: 'in:inbox is:unread category:primary after:2023/07/06',
+    maxResults: 10,
   });
-  // console.log(emails.data.messages);
-  return emails;
+  // console.log(threads);
+  return threads.data.threads;
 };
 
-const getReplyCount = async (gmail, threadId) => {
-  const replies = await gmail.users.threads.get({
-      userId: 'me',
-      id: `${threadId}`,
+
+const getHeaders=(email)=>{
+  const senderAddress = email.data.payload.headers.find(
+    (header) => header.name === 'Delivered-To'
+  );
+  const reciepentAddress = email.data.payload.headers.find(
+    (header) => header.name === 'From' || header.name === 'from'
+  );
+  const msgId = email.data.payload.headers.find(
+    (header) => header.name === 'Message-ID'
+  );
+  const subject = email.data.payload.headers.find(
+    (header) => header.name === 'Subject' || header.name === 'subject'
+  );
+  return {senderAddress,reciepentAddress,subject,msgId};
+}
+
+const getThreadById=async(gmail,id)=>{
+  const { data } = await gmail.users.threads.get({
+    userId: 'me',
+    id: id
   });
-  // console.log(threadId);
-  console.log(replies.data.messages.length);
-  return replies.data.messages.length;
-};
-exports.getUnreadMails = getUnreadMails
-exports.getReplyCount = getReplyCount;
+  return data;
+}
+
+const getEmailById=async(gmail,id)=>{
+  const email = await gmail.users.messages.get({
+    userId: 'me',
+    id: id,
+  });
+  return email;
+}
+
+
+exports.getAllThreads= getAllThreads;
 exports.createReply = createReply;
+exports.getHeaders=getHeaders;
+exports.getThreadById=getThreadById;
+exports.getEmailById=getEmailById;

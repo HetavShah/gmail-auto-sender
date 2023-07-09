@@ -1,12 +1,17 @@
 const mongoose=require('mongoose');
 
 const emailSchema=new mongoose.Schema({
-  threadId:"String"
+  threadId:{
+    type:String,
+    required:true,
+  },
+  status:{
+    type:Boolean,
+    required:true,
+  }
 });
 
 
 const Email=new mongoose.model("Email",emailSchema);
 
-module.exports={
-  Email
-}
+exports.Email=Email;

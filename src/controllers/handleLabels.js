@@ -12,7 +12,6 @@ const createLabelIfNotExists = async (gmail, labelName) => {
         messageListVisibility: 'show',
       },
     });
-    console.log(data.id);
     return data.id;
   } else {
     return label.id;

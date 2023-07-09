@@ -4,19 +4,11 @@ const errorHandler=(err,req,res,next)=>{
 
   if(err instanceof CustomError)
   {
-    return res.status(err.statusCode).json({
-      errors:err.formattedErrorMessage()
-    });
+    res.end(err.formattedErrorMessage()); 
   }
   console.log(err);
-  return res.status(500).send({
-    errors:[
-      {
-        message:"Something went wrong"
-      }
-    ]
-  });
+   res.end("Something went wrong");
 
 }
 
-module.exports={errorHandler};
+exports.errorHandler=errorHandler;

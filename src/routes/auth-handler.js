@@ -3,7 +3,7 @@ const router=express.Router();
 const passport=require('passport');
 
 router.get("/failed", (req, res) => {
-  res.send("Failed")
+  res.send("Authentication failed")
 })
 
 router.get('/google',
@@ -21,6 +21,4 @@ router.get('/google/callback',
 );
 
 
-module.exports={
-  authRouter:router
-}
+exports.authRouter=router;
