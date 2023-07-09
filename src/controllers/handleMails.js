@@ -1,9 +1,9 @@
-const createReply = ({senderAddress,reciepentAddress,subject,msgId}) => {
+const createReply = ({senderAddress,recepientAddress,subject,msgId}) => {
   let emailLines = [];
   emailLines.push("Content-Type: text/plain; charset='utf-8'")
   emailLines.push(`subject: ${subject.value}`);
   emailLines.push(`from: ${senderAddress.value}`);
-  emailLines.push(`to: ${reciepentAddress.value}`);
+  emailLines.push(`to: ${recepientAddress.value}`);
   emailLines.push(`In-Reply-To: ${msgId.value}`);
   emailLines.push('');
   emailLines.push('This is a auto-generated reply trial application');
@@ -26,7 +26,7 @@ const getHeaders=(email)=>{
   const senderAddress = email.data.payload.headers.find(
     (header) => header.name === 'Delivered-To'
   );
-  const reciepentAddress = email.data.payload.headers.find(
+  const recepientAddress = email.data.payload.headers.find(
     (header) => header.name === 'From' || header.name === 'from'
   );
   const msgId = email.data.payload.headers.find(
@@ -35,7 +35,7 @@ const getHeaders=(email)=>{
   const subject = email.data.payload.headers.find(
     (header) => header.name === 'Subject' || header.name === 'subject'
   );
-  return {senderAddress,reciepentAddress,subject,msgId};
+  return {senderAddress,recepientAddress,subject,msgId};
 }
 
 const getThreadById=async(gmail,id)=>{

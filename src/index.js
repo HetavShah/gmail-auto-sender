@@ -1,5 +1,4 @@
 const {app}=require('./app');
-const { CustomError } = require('./middlewares/custom-error');
 const mongoose=require('mongoose');
 
 const  start = async() => {
