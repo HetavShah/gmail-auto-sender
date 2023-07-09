@@ -61,7 +61,7 @@ async function handleUnreadEmails(req, res) {
       continue;
     }
 
-    // Create a new Email document in the database
+    // Create a new thread document in the database
     result = await Email.create({ threadId: thread.id, status: false });
 
     // Retrieve the full thread data

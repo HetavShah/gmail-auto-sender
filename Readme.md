@@ -1,5 +1,8 @@
 # Automatic-Email-sender API
 
+A NodeJS API for sending automated email to the unread mails present in user accout.
+
+
 
 ## Package Description
 
@@ -27,3 +30,10 @@
 
 `cookie-session` is a middleware for Express.js that enables you to store session data in secure cookies. It provides a simple and lightweight session management solution by encrypting and storing session data directly in the client's browser. Unlike server-side session stores, `cookie-session` does not require a separate session store or database, making it easy to use and deploy.
 
+## Code Improvments
+
+### Code can be improved in the following areas
+- We can use Event Emmiter to achieve asynchronous behaviour for sending email notifications to browser
+- We can use Cluster module to decrease load on server
+- Refactoring of the code can be done to improve readability
+- Auth Logic can be improved
