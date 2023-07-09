@@ -1,3 +1,5 @@
+
+// Middleware which checks for authentication
 const isLoggedIn = (req, res, next) => {
   if (req.user) {
       next();

@@ -1,24 +1,23 @@
-const express=require('express');
-const router=express.Router();
-const passport=require('passport');
+const express = require('express');
+const router = express.Router();
+const passport = require('passport');
 
-router.get("/failed", (req, res) => {
-  res.send("Authentication failed")
-})
+// Route for handling failed authentication
+router.get('/failed', (req, res) => {
+  res.send('Authentication failed');
+});
 
-router.get('/google',
-  passport.authenticate('google', {
-          scope:
-              ['email', 'profile','https://www.googleapis.com/auth/gmail.modify']
-      }
-  ));
+// Route for initiating Google OAuth authentication
+router.get('/google', passport.authenticate('google', {
+  scope: ['email', 'profile', 'https://www.googleapis.com/auth/gmail.modify'], // Specify the requested OAuth scopes
+}));
 
-router.get('/google/callback',
-  passport.authenticate('google', {
-      failureRedirect: '/failed',
-      successRedirect: '/email'
-  }),
-);
+// Route for handling the Google OAuth callback
+router.get('/google/callback', passport.authenticate('google', {
+  failureRedirect: '/failed', // Redirect to '/failed' if authentication fails
+  successRedirect: '/email', // Redirect to '/email' if authentication succeeds
+}));
+
 
 
 exports.authRouter=router;

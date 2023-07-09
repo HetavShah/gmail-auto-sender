@@ -16,12 +16,14 @@ const {
 
 const router = express.Router();
 
+// Create a new instance of OAuth2 
 const auth = new google.auth.OAuth2({
   clientId: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
   redirectUri: 'http://localhost:5000/google/callback',
 });
 
+// Function to send Email
 const sendMail = async (gmail, data, res) => {
   const sentMail = await gmail.users.messages.send({
     userId: 'me',
@@ -80,12 +82,12 @@ async function handleUnreadEmails(req, res) {
     const headers = getHeaders(email);
 
     // If sender and recipient addresses are present, send a reply email
-    if (headers.senderAddress && headers.recepientAddress) {
+    if (headers.senderAddress && headers.recipientAddress) {
       const reply = createReply(headers);
       
       const labelId = await createLabelIfNotExists(gmail, 'RRS');
       
-      res.write(`Email will be sent to ${headers.recepientAddress?.value}\n`);
+      res.write(`Email will be sent to ${headers.recipientAddress?.value}\n`);
 
       // Send the reply email
       await sendMail(gmail, reply, res);
